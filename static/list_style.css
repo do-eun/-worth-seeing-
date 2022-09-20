@@ -1,0 +1,155 @@
+@import url("https://fonts.googleapis.com/css2?family=Jua&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Gothic+A1:wght@100;200;300;400;500;600;700;800;900&display=swap");
+* {
+  margin: 0;
+  padding: 0;
+  /*border: solid 1px black;*/
+}
+
+body {
+  background-color: white;
+}
+
+/*.main_logo{*/
+/*  width: 90px;*/
+/*  height: 70px;*/
+/*}*/
+
+#mainmenu {
+  float: left;
+  width: 100%;
+  height: 79px;
+  clear: both;
+  margin-bottom: 40px;
+}
+
+#mainmenu ul.navi {
+  list-style: none;
+  position: relative;
+}
+
+#mainmenu ul.navi li {
+  display: inline;
+}
+
+#mainmenu ul.navi li a {
+  float: left;
+  text-align: center;
+  font: bold 15px "Gothic A1", sans-serif;
+  line-height: 50px;
+  color: black;
+  text-decoration: none;
+  font-size: 30px;
+}
+
+.sign_up {
+  float: right;
+  margin-right: 100px;
+  margin-top: 20px;
+  border: 1px solid black;
+  width: 120px;
+  text-align: center;
+  align-items: center;
+}
+
+
+.mytitle {
+  font-family: "Jua", sans-serif;
+
+  border-radius: 20px;
+  width: 80%;
+  height: 250px;
+  margin: 0 auto 0 auto;
+  margin-top: 300px;
+  background-image: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 0.5),
+      rgba(0, 0, 0, 0.5)
+    )
+  background-position: bottom;
+
+  background-size: cover;
+
+  color: white;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.mytitle > p {
+  font-size: 60px;
+}
+/* transition 하기 */
+.mytitle > button {
+  width: 200px;
+  height: 50px;
+  font-size: 25px;
+  background: transparent;
+  color: white;
+  border-radius: 50px;
+  border: 1px solid white;
+  margin-top: 10px;
+}
+
+.mytitle > button:hover {
+  background: linear-gradient(to right, #1b2838ad, #45566a9c);
+}
+
+.mycomment {
+  font-style: oblique;
+  color: deeppink;
+}
+
+#topbox-btn {
+  margin-top: 10px;
+  margin-bottom: -10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.btn-submit {
+  background-color: green;
+  border: none;
+}
+
+.mycards {
+  margin: 20px auto 0px auto;
+  width: 95%;
+  max-width: 1800px;
+}
+
+.card-body {
+  font-family: "Gothic A1", sans-serif;
+  font-size: 17px;
+}
+
+.mypost {
+  width: 95%;
+  max-width: 500px;
+  margin: 20px auto 0px auto;
+  padding: 20px;
+  box-shadow: 0px 0px 3px 0px gray;
+
+  display: none;
+}
+
+.mybtns {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 20px;
+}
+
+.mybtns > button {
+  margin-right: 10px;
+}
+
+.card {
+  border: solid 2px #ED8774;
+}

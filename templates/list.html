@@ -23,69 +23,58 @@
     <title>게임 추천 페이지</title>
     <link rel="stylesheet" href="../static/list_style.css" />
     <script>
+        {#리스팅 시작#}
       $(document).ready(function () {
         listing();
         });
 
-function listing() {
-  $.ajax({
-    type: "GET",
-    url: "/list",
-    data: {},
-    success: function (response) {
-      let rows = response["youtube_list"];
-      for (let i = 0; i < rows.length; i++) {
-        let comment = rows[i]["comment"];
-        let title = rows[i]["title"];
-        let desc = rows[i]["desc"];
-        let image = rows[i]["image"];
+      {#카드 ajax#}
+        function listing() {
+          $.ajax({
+            type: "GET",
+            url: "/list",
+            data: {},
+            success: function (response) {
+              let rows = response["youtube_list"];
+              for (let i = 0; i < rows.length; i++) {
+                let comment = rows[i]["comment"];
+                let title = rows[i]["title"];
+                let image = rows[i]["image"];
 
-        let temp_html = `<div class="col">
-                            <a href="#" class="card-wrap">
-                                          <div class="card h-100">
-                                              <img src="${image}"
-                                                   class="card-img-top">
-                                              <div class="card-body">
-                                                  <h5 class="card-title">${title}</h5>
-                                                  <p class="mycomment">${comment}</p>
+                let temp_html = `<div class="col">
+                                    <a href="#" class="card-wrap">
+                                      <div class="card h-100">
+                                          <img src="${image}"
+                                               class="card-img-top">
+                                          <div class="card-body">
+                                              <h5 class="card-title">${title}</h5>
+                                              <p class="mycomment">${comment}</p>
                                     </a>
-                                     </div>
-                            `;
+                                 </div>`;
+                $("#cards-box").append(temp_html);
+              }
+            },
+          });
+        }
 
-        $("#cards-box").append(temp_html);
-      }
-    },
-  });
-}
-
-function Checkform() {
-
-    if( frm.name.value == "" ) {
-
-        frm.name.focus();
-        alert("성명을 입력해 주십시오.");
-
-        return false;
-
-    }
-
-}
-
-
+{#url 업로드#}
 function upload(){
     let url_input = $("url").val()
     console.log(url_input)
 }
 
+{#DB에 올리기#}
 function posting() {
   let url = $("#url").val();
   let comment = $("#comment").val();
 
+   {#url 입력 안했을때 경고#}
    if($.trim($("#url").val())==''){
       alert("사이트를 입력해주세요!.");
       return false;
     }
 
+   {#url 설명 안 올렸때 경고#}
    if($.trim($("#comment").val())==''){
       alert("추천하는 이유도 알려줘잉.");
       return false;}
@@ -101,6 +90,7 @@ function posting() {
   });
 }
 
+ {#설명 길이 30자로 제한#}
  $(document).ready(function() {
         $('#comment').on('keyup', function() {
             $('#comment_cnt').html("("+$(this).val().length+" / 30)");
@@ -112,10 +102,12 @@ function posting() {
         });
     });
 
+ {#등록하기 열기#}
  function open_box() {
             $('#post-box').show()
         }
 
+{#등록하기 닫기#}
 function close_box() {
   $("#post-box").hide();
 }
@@ -124,6 +116,8 @@ function close_box() {
   </head>
 
   <body>
+
+{#상단 메뉴 네비게이션#}
     <div id="mainmenu">
       <ul class="navi">
         <li class="logo_top">
@@ -135,6 +129,7 @@ function close_box() {
       </ul>
     </div>
 
+{#상단 추천하기 버튼#}
     <div class="mytitle">
       <p>이 채널 볼만해!</p>
       <button onclick="open_box()">채널 공유하기</button>

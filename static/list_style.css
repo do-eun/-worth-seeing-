@@ -71,11 +71,8 @@ body {
     ), url("../static/캡처.PNG");
 ;
   background-position: center;
-
   background-size: cover;
-
   color: white;
-
   display: flex;
   flex-direction: column;
   align-items: center;

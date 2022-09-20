@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <script src="https://kit.fontawesome.com/ca4299af83.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/login.css">
+
+    <title>로그인 페이지</title>
+
+    <script>
+        // 로그인 입력값을 불러와서 서버에 ajax 요청
+        function login() {
+            $('#input_id').val()
+            $('#input_pw').val()
+        }
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="logo_box">
+            <img class="login_logo" src="/static/1200x360%20웹%20로고.png">
+            <h1>유튜브에서 재미있게 봤던 영상이 있다면 그 채널을 다른 사람과 공유하며 즐길수 있는 웹 페이지 입니다.</h1>
+        </div>
+        <div class="login_box">
+            <div class="login_function">
+                <div class="login_input">
+                    <div class="control has-icons-left has-icons-right">
+                        <input id="input_id" class="input is-large" type="email" placeholder="아이디">
+                        <span class="icon is-medium is-left">
+                            <i class="fa-sharp fa-solid fa-circle-user"></i>
+                        </span>
+                        <span class="icon is-medium is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                    </div>
+                    <div class="control has-icons-left has-icons-right">
+                        <input id="input_pw" class="input is-large" type="email" placeholder="비밀번호">
+                        <span class="icon is-medium is-left">
+                            <i class="fa-sharp fa-solid fa-lock"></i>
+                        </span>
+                        <span class="icon is-medium is-right">
+                            <i class="fas fa-check"></i>
+                        </span>
+                    </div>
+                </div>
+                <button class="login_btn" onclick="login()" class="button is-outlined">🚀 로그인하기</button>
+            </div>
+            <div class="login_option">
+                <button class= "signup_btn">회원가입</button>
+                <button class= "search_btn">아이디/비밀번호 찾기</button>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -23,7 +23,6 @@ def signup():
 @app.route("/list", methods=["POST"])
 def game_post():
     url_receive = request.form['url_give']
-    star_receive = request.form['star_give']
     comment_receive = request.form['comment_give']
 
     headers = {
@@ -32,23 +31,20 @@ def game_post():
 
     soup = BeautifulSoup(data.text, 'html.parser')
     title = soup.select_one('meta[property="og:title"]')['content']
-    desc = soup.select_one('meta[property="og:description"]')['content']
     image = soup.select_one('meta[property="og:image"]')['content']
 
     doc = {
         'title':title,
         'image':image,
-        'desc':desc,
-        'star':star_receive,
         'comment':comment_receive
     }
-    db.youtube.insert_one(doc)
+    db.list.insert_one(doc)
 
-    return jsonify({'msg':'게임 추천 완료!'})
+    return jsonify({'msg':'채널 추천 완료!'})
 
 @app.route("/list", methods=["GET"])
 def youtube_get():
-    youtube_list = list(db.youtube.find({}, {'_id':False}))
+    youtube_list = list(db.list.find({}, {'_id':False}))
     return jsonify({'youtube_list': youtube_list})
 
 @app.route('/comment')

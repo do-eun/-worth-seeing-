@@ -24,13 +24,13 @@
     <link rel="stylesheet" href="../static/list_style.css" />
     <script>
       $(document).ready(function () {
-  listing();
-});
+        listing();
+        });
 
 function listing() {
   $.ajax({
     type: "GET",
-    url: "/youtube",
+    url: "/list",
     data: {},
     success: function (response) {
       let rows = response["youtube_list"];
@@ -39,20 +39,19 @@ function listing() {
         let title = rows[i]["title"];
         let desc = rows[i]["desc"];
         let image = rows[i]["image"];
-        let star = rows[i]["star"];
 
-        let star_image = "👍".repeat(star);
-
-        let temp_html = ` <div class="col">
+        let temp_html = `<div class="col">
+                            <a href="#" class="card-wrap">
                                           <div class="card h-100">
                                               <img src="${image}"
                                                    class="card-img-top">
                                               <div class="card-body">
                                                   <h5 class="card-title">${title}</h5>
-                                                  <p class="card-text">${desc}</p>
-                                                  <p>${star_image}</p>
                                                   <p class="mycomment">${comment}</p>
-                                     </div>`;
+                                    </a>
+                                     </div>
+                            `;
+
         $("#cards-box").append(temp_html);
       }
     },
@@ -61,13 +60,12 @@ function listing() {
 
 function posting() {
   let url = $("#url").val();
-  let star = $("#star").val();
   let comment = $("#comment").val();
 
   $.ajax({
     type: "POST",
-    url: "/youtube",
-    data: { url_give: url, star_give: star, comment_give: comment },
+    url: "/list",
+    data: {url_give: url, comment_give: comment },
     success: function (response) {
       alert(response["msg"]);
       window.location.reload();
@@ -89,8 +87,8 @@ function close_box() {
   <body>
     <div id="mainmenu">
       <ul class="navi">
-        <li>
-          <a href="#"><img class="main_logo" src="../static/200x100%20작은%20로고.png"><img></a>
+        <li class="logo_top">
+          <a onclick="window.location.href = '/'"><img class="main_logo" src="../static/200x100%20작은%20로고.png"><img></a>
         </li>
         <li class="sign_up">
           <a href="#">로그인</a>
@@ -99,8 +97,8 @@ function close_box() {
     </div>
 
     <div class="mytitle">
-      <p>내 최애 게임!</p>
-      <button onclick="open_box()">게임 공유하기</button>
+      <p>이 채널 볼만해!</p>
+      <button onclick="open_box()">채널 공유하기</button>
     </div>
 
     <!-- 추가하는 박스 -->
@@ -112,26 +110,26 @@ function close_box() {
           class="form-control"
           placeholder="name@example.com"
         />
-        <label>게임 URL</label>
+        <label>채널 URL</label>
       </div>
-      <div class="input-group mb-3">
-        <label class="input-group-text" for="inputGroupSelect01">별점</label>
-        <select class="form-select" id="star">
-          <option selected>-- 선택하기 --</option>
-          <option value="1">👍</option>
-          <option value="2">👍👍</option>
-          <option value="3">👍👍👍</option>
-          <option value="4">👍👍👍👍</option>
-          <option value="5">👍👍👍👍👍</option>
-        </select>
-      </div>
+{#      <div class="input-group mb-3">#}
+{#        <label class="input-group-text" for="inputGroupSelect01">별점</label>#}
+{#        <select class="form-select" id="star">#}
+{#          <option selected>-- 선택하기 --</option>#}
+{#          <option value="1">👍</option>#}
+{#          <option value="2">👍👍</option>#}
+{#          <option value="3">👍👍👍</option>#}
+{#          <option value="4">👍👍👍👍</option>#}
+{#          <option value="5">👍👍👍👍👍</option>#}
+{#        </select>#}
+{#      </div>#}
       <div class="form-floating">
         <textarea
           id="comment"
           class="form-control"
           placeholder="Leave a comment here"
         ></textarea>
-        <label for="floatingTextarea2">코멘트</label>
+        <label for="floatingTextarea2">이 채널 꼭 봐봐!</label>
 
       </div>
 
@@ -146,7 +144,9 @@ function close_box() {
         >
           기록하기
         </button>
-        <button class="btn btn-primary" onclick="close_box()" type="button">
+        <button class="btn btn-primary" style="background: red; border:none;"
+                onclick="close_box()"
+                type="button">
           닫기
         </button>
       </div>

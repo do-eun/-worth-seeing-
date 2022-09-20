@@ -58,6 +58,20 @@ function listing() {
   });
 }
 
+function Checkform() {
+
+    if( frm.name.value == "" ) {
+
+        frm.name.focus();
+        alert("성명을 입력해 주십시오.");
+
+        return false;
+
+    }
+
+}
+
+
 function upload(){
     let url_input = $("url").val()
     console.log(url_input)
@@ -66,6 +80,15 @@ function upload(){
 function posting() {
   let url = $("#url").val();
   let comment = $("#comment").val();
+
+   if($.trim($("#url").val())==''){
+      alert("사이트를 입력해주세요!.");
+      return false;
+    }
+
+   if($.trim($("#comment").val())==''){
+      alert("추천하는 이유도 알려줘잉.");
+      return false;}
 
   $.ajax({
     type: "POST",
@@ -77,6 +100,17 @@ function posting() {
     },
   });
 }
+
+ $(document).ready(function() {
+        $('#comment').on('keyup', function() {
+            $('#comment_cnt').html("("+$(this).val().length+" / 30)");
+
+            if($(this).val().length > 30) {
+                $(this).val($(this).val().substring(0, 30));
+                $('#commet_cnt').html("(30 / 30)");
+            }
+        });
+    });
 
  function open_box() {
             $('#post-box').show()
@@ -107,55 +141,48 @@ function close_box() {
     </div>
 
     <!-- 추가하는 박스 -->
-    <div class="mypost" id="post-box">
-      <div class="form-floating mb-3">
-        <input
-          id="url"
-          type="email"
-          class="form-control"
-          placeholder="name@example.com"
-        />
-        <label>채널 URL</label>
-      </div>
-{#      <div class="input-group mb-3">#}
-{#        <label class="input-group-text" for="inputGroupSelect01">별점</label>#}
-{#        <select class="form-select" id="star">#}
-{#          <option selected>-- 선택하기 --</option>#}
-{#          <option value="1">👍</option>#}
-{#          <option value="2">👍👍</option>#}
-{#          <option value="3">👍👍👍</option>#}
-{#          <option value="4">👍👍👍👍</option>#}
-{#          <option value="5">👍👍👍👍👍</option>#}
-{#        </select>#}
-{#      </div>#}
-      <div class="form-floating">
-        <textarea
-          id="comment"
-          class="form-control"
-          placeholder="Leave a comment here"
-        ></textarea>
-        <label for="floatingTextarea2">이 채널 꼭 봐봐!</label>
+    <form>
+        <div class="mypost" id="post-box">
+          <div class="form-floating mb-3">
+            <input
+              id="url"
+              type="email"
+              class="form-control"
+              placeholder="name@example.com"
+            />
+            <label>채널 URL</label>
+          </div>
 
-      </div>
+          <div class="form-floating">
+            <textarea
+              id="comment"
+              class="form-control"
+              placeholder="Leave a comment here"
+            ></textarea>
+            <label for="floatingTextarea2">이 채널 꼭 봐봐!</label>
+          </div>
+            <div id="comment_cnt" >(0 / 30)</div>
 
-      <div
-        id="topbox-btn"
-        class="d-grid gap-2 d-md-flex justify-content-md-center"
-      >
-        <button
-          class="btn btn-primary me-md-2 btn-submit"
-          onclick="posting()"
-          type="button"
-        >
-          기록하기
-        </button>
-        <button class="btn btn-primary" style="background: red; border:none;"
-                onclick="close_box()"
-                type="button">
-          닫기
-        </button>
-      </div>
-    </div>
+          <div
+            id="topbox-btn"
+            class="d-grid gap-2 d-md-flex justify-content-md-center"
+            style="clear: both"
+          >
+            <button
+              class="btn btn-primary me-md-2 btn-submit"
+              onclick="posting()"
+              type="button"
+            >
+              기록하기
+            </button>
+            <button class="btn btn-primary" style="background: red; border:none;"
+                    onclick="close_box()"
+                    type="button">
+              닫기
+            </button>
+          </div>
+        </div>
+    </form>
 
     <!-- 게임 목록 -->
     <div class="mycards">

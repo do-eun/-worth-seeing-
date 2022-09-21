@@ -80,6 +80,39 @@
         }
     </style>
     <script>
+        //페이지 로딩시 랜덤 유튭 박스 추가요!....
+         $(document).ready(function(){
+            randomVideo();
+        });
+
+        function randomVideo() {
+            // $('#youtube-box').empty();
+
+            $.ajax({
+                type: "GET",
+                url: "/list",
+                data: {},
+                success: function (response) {
+                    let rows = response['youtube_list']
+                    let i = Math.floor(Math.random() * rows.length)
+                    let title = rows[i]['title']
+                    let image = rows[i]['image']
+                    let comment = rows[i]['comment']
+
+                    let temp_html = `<div class="tile is-parent tile is-3" id="card_box">
+                                    <article class="tile is-child box">
+                                    <figure class="image is-256x256" id="image_box">
+                                        <img src="${image}">
+                                        </figure>
+                                    <p class="title is-4">${title}</p>
+                                    <p class="subtitle">${comment}</p>
+                                    </article>
+                                </div>`
+                    $('#youtube-box').append(temp_html);
+                }
+            })
+        }
+        
         // 로딩 후 코멘트 보여주기 입니다
         $(document).ready(function () {
             show_comment();
@@ -155,7 +188,7 @@
                 </div>
             </div>
         </article>
-        <div class="video_box">
+        <div class="video_box" id="youtube-box">
             <iframe style="max-width: 500px; width: 99%" height="330" src="https://www.youtube.com/embed/3zPnom6vpZo"
                     title="YouTube video player"
                     frameborder="0"

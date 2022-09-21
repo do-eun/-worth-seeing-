@@ -1,167 +1,284 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, shrink-to-fit=no"
-    />
+<head>
+    <!-- Webpage Title -->
+    <title>채널 추천 | worth_seeing</title>
 
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
-    <script src="https://kit.fontawesome.com/009dabc713.js" crossorigin="anonymous"></script>
-    <title>게임 추천 페이지</title>
-    <link rel="stylesheet" href="../static/list_style.css" />
+    <meta property="og:title" content="볼만해 - 유튜브 채널 추천"/>
+    <meta property="og:description" content="유튜브에서 재미있게 봤던 영상이 있다면 그 채널을 다른 사람과 공유하며 같이 즐길 수 있는 웹 페이지 입니다."/>
+    <meta property="og:image" content="{{ url_for('static', filename='og.png') }}"/>
+    <!--title 옆 아이콘 모양-->
+    <link rel="shortcut icon" href="../static/list_con.png" type="image/x-icon">
+    <link rel="icon" href="../static/list_con.png" type="image/x-icon">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--CSS 링크-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 구글폰트 CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <!-- font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif; -->
+
+    <!-- <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet"> -->
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    
+    <!-- <script src="{{ url_for('static', filename='myjs.js') }}"></script> -->
+
+    <style>
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        /*채널추천 패널 박스*/
+
+        .hero-body {
+            display: flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-body > button {
+            margin-top: 10px;
+        }
+
+        .title {
+            font-size: 80px;
+        }
+
+        /*채널추가 박스*/
+
+        #url {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #comment {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .mypost {
+            width: 95%;
+            max-width: 600px;
+            margin: 10px auto 0px auto;
+            padding: 20px;
+            box-shadow: 0px 0px 3px 0px #34a375;
+            display: none;
+            border: 5px solid #41cc93;
+        }
+
+        .mypost > label {
+            font-weight: bolder;
+        } 
+
+        .button_box {
+            margin-top: 20px;
+
+            display: flex;
+            flex-direction:row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button_box > button {
+            margin-left: 10px;
+            font-family: 'Jua', sans-serif;
+        }
+        
+        /*채널카드*/
+        
+        #image_box {
+            margin-bottom: 10px;
+        }
+
+        .flex-container {
+            display: flex;
+
+            margin: auto;
+            width: 90%;
+            max-width: 1200px;
+            /* border:5px solid #ED8774;
+            border-radius: 10px; */
+        }
+
+        .flex-container.wrap{flex-wrap: wrap;}
+
+        /* transition 하기 */
+
+        /* #comment_cnt {
+            float: right;
+        }
+
+        #topbox-btn {
+            clear: both;
+        }
+
+        textarea {
+            resize: none;
+        }
+
+        #topbox-btn {
+            margin-top: 10px;
+            margin-bottom: -10px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .btn-submit {
+            background-color: #66d6a8;
+            border: none;
+        }
+
+        .card-wrap {
+            text-decoration: none;
+        }
+
+        .card {
+            border: solid 4px #ed8774;
+            max-width: 80vw;
+
+            margin: 0 auto;
+        }
+
+        .card-title {
+            color: black;
+        }
+
+        .card-text {
+            text-overflow: ellipsis;
+        } */
+    </style>
+        
     <script>
-      $(document).ready(function () {
+        $(document).ready(function () {
         listing();
         });
 
-function listing() {
-  $.ajax({
-    type: "GET",
-    url: "/list",
-    data: {},
-    success: function (response) {
-      let rows = response["youtube_list"];
-      for (let i = 0; i < rows.length; i++) {
-        let comment = rows[i]["comment"];
-        let title = rows[i]["title"];
-        let desc = rows[i]["desc"];
-        let image = rows[i]["image"];
+        function listing() {
+        $.ajax({
+            type: "GET",
+            url: "/list",
+            data: {},
+            success: function (response) {
+            let rows = response["youtube_list"];
+            for (let i = 0; i < rows.length; i++) {
+                let comment = rows[i]["comment"];
+                let title = rows[i]["title"];
+                let desc = rows[i]["desc"];
+                let image = rows[i]["image"];
 
-        let temp_html = `<div class="col">
-                            <a href="#" class="card-wrap">
-                                          <div class="card h-100">
-                                              <img src="${image}"
-                                                   class="card-img-top">
-                                              <div class="card-body">
-                                                  <h5 class="card-title">${title}</h5>
-                                                  <p class="mycomment">${comment}</p>
-                                    </a>
-                                     </div>
-                            `;
+                let temp_html = `<div class="tile is-parent tile is-3" id="card_box">
+                                    <article class="tile is-child box">
+                                    <figure class="image is-256x256" id="image_box">
+                                        <img src="${image}">
+                                        </figure>
+                                    <p class="title is-4">${title}</p>
+                                    <p class="subtitle">${comment}</p>
+                                    </article>
+                                </div>`;
 
-        $("#cards-box").append(temp_html);
-      }
-    },
-  });
-}
-
-function upload(){
-    let url_input = $("url").val()
-    console.log(url_input)
-}
-
-function posting() {
-  let url = $("#url").val();
-  let comment = $("#comment").val();
-
-  $.ajax({
-    type: "POST",
-    url: "/list",
-    data: {url_give: url, comment_give: comment },
-    success: function (response) {
-      alert(response["msg"]);
-      window.location.reload();
-    },
-  });
-}
-
- function open_box() {
-            $('#post-box').show()
+                $("#cards-box").append(temp_html);
+            }
+            },
+        });
         }
 
-function close_box() {
-  $("#post-box").hide();
-}
+        // function upload(){
+        //     let url_input = $("url").val()
+        //     console.log(url_input)
+        // }
 
+        function posting() {
+        let url = $("#url").val();
+        let comment = $("#comment").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/list",
+            data: {url_give: url, comment_give: comment },
+            success: function (response) {
+            alert(response["msg"]);
+            window.location.reload();
+            },
+        });
+        }
+
+        function open_box() {
+                    $('#post-box').show()
+                }
+
+        function close_box() {
+        $("#post-box").hide();
+        }
     </script>
   </head>
 
   <body>
-    <div id="mainmenu">
-      <ul class="navi">
-        <li class="logo_top">
-          <a onclick="window.location.href = '/'"><img class="main_logo" src="../static/200x100%20작은%20로고.png"><img></a>
-        </li>
-        <li class="sign_up">
-          <a href="#">로그인</a>
-        </li>
-      </ul>
+    <!--네비게이션바-->
+        <nav class="navbar-menu is-active">
+            <div class="navbar-brand"> 
+                <a class="navbar-item">
+                <img src="../static/타이틀 로고.png" width="100" alt="볼만해">
+                </a>
+            </div>
+            <div class="navbar-start">
+                <a class="navbar-item" style="font-family: 'Jua', sans-serif;">
+                    채널 추천 보러가기
+                </a>
+                <a class="navbar-item" style="font-family: 'Jua', sans-serif;">
+                    나의 정보
+                </a>
+            </div>
+          
+            <div class="navbar-end">
+              <div class="navbar-item">
+                <div class="buttons">
+                  <a class="button is-primary">
+                    <strong style="font-family: 'Jua', sans-serif;">로그아웃 하기</strong>
+                  </a>
+                </div>
+            </div>
+        </nav>
+
+    <!--채널추천 패널 박스-->
+        <div class="hero-body">
+            <img src="../static/list_logo.png" width="1000" height="250">
+            <button class="button is-success is-rounded is-medium" onclick="open_box()" style="font-family: 'Jua', sans-serif;">채널 추천하기!!</button>
+        </div>
+
+    <!-- 채널 추가 박스 -->
+    <div>
+        <div class="mypost" id="post-box">
+            <label>채널 URL</label>
+            <input class="input is-primary" type="text" placeholder="추천하려는 채널 주소를 넣어주세요" id="url">
+            
+            <label>채널 소개</label>
+            <input class="input is-primary" type="text" placeholder="간단한 채널 소개" id="comment">
+
+            <div class="button_box" onclick="close_box()">
+                <button class="button is-primary">등록하기</button>
+                <button class="button">닫기</button>
+            </div>
+        </div>
     </div>
 
-    <div class="mytitle">
-      <p>이 채널 볼만해!</p>
-      <button onclick="open_box()">채널 공유하기</button>
+    <!-- 추천 채널 카드 -->
+    <div class="flex-container wrap" id="cards-box">
+       
     </div>
-
-    <!-- 추가하는 박스 -->
-    <div class="mypost" id="post-box">
-      <div class="form-floating mb-3">
-        <input
-          id="url"
-          type="email"
-          class="form-control"
-          placeholder="name@example.com"
-        />
-        <label>채널 URL</label>
-      </div>
-{#      <div class="input-group mb-3">#}
-{#        <label class="input-group-text" for="inputGroupSelect01">별점</label>#}
-{#        <select class="form-select" id="star">#}
-{#          <option selected>-- 선택하기 --</option>#}
-{#          <option value="1">👍</option>#}
-{#          <option value="2">👍👍</option>#}
-{#          <option value="3">👍👍👍</option>#}
-{#          <option value="4">👍👍👍👍</option>#}
-{#          <option value="5">👍👍👍👍👍</option>#}
-{#        </select>#}
-{#      </div>#}
-      <div class="form-floating">
-        <textarea
-          id="comment"
-          class="form-control"
-          placeholder="Leave a comment here"
-        ></textarea>
-        <label for="floatingTextarea2">이 채널 꼭 봐봐!</label>
-
-      </div>
-
-      <div
-        id="topbox-btn"
-        class="d-grid gap-2 d-md-flex justify-content-md-center"
-      >
-        <button
-          class="btn btn-primary me-md-2 btn-submit"
-          onclick="posting()"
-          type="button"
-        >
-          기록하기
-        </button>
-        <button class="btn btn-primary" style="background: red; border:none;"
-                onclick="close_box()"
-                type="button">
-          닫기
-        </button>
-      </div>
-    </div>
-
-    <!-- 게임 목록 -->
-    <div class="mycards">
-      <div class="row row-cols-1 row-cols-md-5 g-4" id="cards-box">
-      </div>
-    </div>
-
+      
   </body>
 </html>

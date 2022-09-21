@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Webpage Title -->
+    <title> 유저 정보 | worth_seeing</title>
+
+    <meta property="og:title" content="볼만해 - 유튜브 채널 추천"/>
+    <meta property="og:description" content="유튜브에서 재미있게 봤던 영상이 있다면 그 채널을 다른 사람과 공유하며 같이 즐길 수 있는 웹 페이지 입니다."/>
+    <meta property="og:image" content="{{ url_for('static', filename='og.png') }}"/>
+    <!--title 옆 아이콘 모양-->
+    <link rel="shortcut icon" href="../static/user_con.png" type="image/x-icon">
+    <link rel="icon" href="../static/user_con.png" type="image/x-icon">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--CSS 링크-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 구글폰트 CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <!-- font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif; -->
+
+    <!-- <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet"> -->
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    
+    <!-- <script src="{{ url_for('static', filename='myjs.js') }}"></script> -->
+ 
+    <style>
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+        /*회원정보 띄우기*/
+        .media {
+            width: 800px;
+
+            margin: 20px auto;
+            padding: 20px;
+
+        }
+
+        /*수정하기 박스*/
+        .mypage_box {
+            width: 800px;
+
+            margin: 30px auto;
+            padding: 20px;
+
+            border: 5px solid #006BA3
+        }
+
+        #intro_box {
+            margin-top: 10px;
+        }
+
+        #name_box {
+            margin-top: 10px;
+        }
+
+        #profile_box {
+            margin-top: 10px;
+        }
+
+        /*회원 정보 수정 안내*/
+        .title {
+            width: 800px;
+            margin: 20px auto;
+        }
+
+        .title > p {
+            font-weight: bolder;
+            font-size: 50px
+        }
+
+        /*버튼 박스*/
+        .button_box {
+            margin-top: 20px;
+
+            display: flex;
+            flex-direction:row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button_box > button {
+            margin-left: 20px;
+            font-family: 'Jua', sans-serif;
+        }
+    </style>
+
+</head>
+<body>
+    <!--네비게이션바-->
+    <nav class="navbar-menu is-active">
+        <div class="navbar-brand"> 
+            <a class="navbar-item">
+            <img src="../static/타이틀 로고.png" width="100" alt="볼만해">
+            </a>
+        </div>
+        <div class="navbar-start">
+            <a class="navbar-item" style="font-family: 'Jua', sans-serif;">
+                채널 추천 보러가기
+            </a>
+            <a class="navbar-item" style="font-family: 'Jua', sans-serif;">
+                나의 정보
+            </a>
+        </div>
+      
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong style="font-family: 'Jua', sans-serif;">로그아웃 하기</strong>
+              </a>
+            </div>
+        </div>
+    </nav>
+
+    <!--마이 페이지 정보-->
+    <div class="title">
+        <p>회원 정보 수정하기 🔐</p>
+        <p style="font-size: 25px; font-weight: lighter;">가입하신 회원 정보입니다.</p>
+    </div>
+
+    <!--마이 페이지 박스-->
+    <article class="media">
+            <figure class="media-left" style="align-self: center">
+                <a class="image is-96x96" href="#">
+                    <img src="../static/profile_pics/profile_placeholder.png">
+                </a>
+            </figure>
+            <div class="media-content">
+                <div class="content">
+                    <strong>아이디</strong>
+                    <br>
+                    소개글
+                </div>
+            </div>
+        </article>
+    <div class="mypage_box">
+        
+        <div>
+            <label class="label" id="name_box">이름</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="닉네임">
+            </div>
+
+            <label class="label" id="intro_box">소개글</label>
+            <textarea class="textarea" placeholder="e.g. Hello world"></textarea>
+
+            <label class="label" id="intro_box">프로필 사진 변경</label>
+            <div class="control is-expanded" id="profile_box">
+                <div class="file has-name">
+                    <label class="file-label" style="width:100%">
+                        <input id="input-pic" class="file-input" type="file"
+                               name="resume">
+                        <span class="file-cta"><span class="file-icon"><i
+                                class="fa fa-upload"></i></span>
+                    <span class="file-label">파일 선택</span>
+                </span>
+                        <span id="file-name" class="file-name"
+                              style="width:100%;max-width:100%">찾아보기 -- </span>
+                    </label>
+                </div>
+
+            </div>
+            <div class="button_box">
+                <button class="button is-info">수정 완료</button>
+                <button class="button">돌아가기</button>
+            </div>
+        </div> 
+
+</body>
+</html>

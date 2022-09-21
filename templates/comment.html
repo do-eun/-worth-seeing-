@@ -1,10 +1,239 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <!-- Webpage Title -->
+    <title>채널 코멘트 | worth_seeing</title>
+
+    <meta property="og:title" content="볼만해 - 유튜브 채널 추천"/>
+    <meta property="og:description" content="유튜브에서 재미있게 봤던 영상이 있다면 그 채널을 다른 사람과 공유하며 같이 즐길 수 있는 웹 페이지 입니다."/>
+    <meta property="og:image" content="{{ url_for('static', filename='og.png') }}"/>
+    <!--title 옆 아이콘 모양-->
+    <link rel="shortcut icon" href="../static/comment_con.png" type="image/x-icon">
+    <link rel="icon" href="../static/comment_con.png" type="image/x-icon">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bulma CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+    <!-- Font Awesome CSS -->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!--CSS 링크-->
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    
+    <!-- 구글폰트 CSS -->
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <!-- font-family: 'Jua', sans-serif;
+    font-family: 'Nanum Gothic', sans-serif; -->
+
+    <!-- <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet"> -->
+
+    <!-- JS -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
+    
+    <!-- <script src="{{ url_for('static', filename='myjs.js') }}"></script> -->
+    
+    <style>
+        * {
+            font-family: 'Nanum Gothic', sans-serif;
+        }
+
+        /*코멘트 박스*/
+        .comment_box {
+            width: 700px;
+            height: 600px;
+
+            margin: 50px auto;
+            padding: 20px;
+
+            border: 5px solid #41CC93
+            
+        }
+
+        /*코멘트 페이지 정보*/
+        .title {
+            width: 800px;
+            margin: 20px auto;
+        }
+
+        .title > p {
+            font-weight: bolder;
+            font-size: 50px
+        }
+        
+        /*유튜브 비디오*/
+        .video {
+            margin-top: 40px;
+        }
+
+        .video_box {
+            width: 650px;
+
+            display: flex;
+            flex-direction:row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /*댓글창*/
+
+        .section {
+            padding: 1rem 1.5rem;
+            max-width: 750px;
+            margin: auto;
+        }
+    
+
+    </style>
+    <script>
+
+    </script>
 </head>
-<body>
-    <h1>코멘트 페이지 입니다.</h1>
+<body >
+     <!--네비게이션바-->
+     <nav class="navbar-menu is-active">
+        <div class="navbar-brand"> 
+            <a class="navbar-item">
+            <img src="../static/타이틀 로고.png" width="100" alt="볼만해">
+            </a>
+        </div>
+        <div class="navbar-start">
+            <a class="navbar-item" style="font-family: 'Jua', sans-serif;">
+                채널 추천 보러가기
+            </a>
+            <a class="navbar-item" style="font-family: 'Jua', sans-serif;">
+                나의 정보
+            </a>
+        </div>
+      
+        <div class="navbar-end">
+          <div class="navbar-item">
+            <div class="buttons">
+              <a class="button is-primary">
+                <strong style="font-family: 'Jua', sans-serif;">로그아웃 하기</strong>
+              </a>
+            </div>
+        </div>
+    </nav>
+
+    <!--코멘트 페이지 정보-->
+    <div class="title">
+        <p>oo 채널 코멘트💬</p>
+        <p style="font-size: 25px; font-weight: lighter;">의견을 자유롭게 남겨주세요.</p>
+    </div>
+
+    <!--영상 소개 박스-->
+    <div class="comment_box">
+
+            <article class="media">
+                <figure class="media-left" style="align-self: center">
+                    <a class="image is-96x96" href="#">
+                        <img class="is-rounded" src="../static/profile_pics/profile_placeholder.png">
+                    </a>
+                </figure>
+                <div class="media-content">
+                    <div class="content">
+                        <strong>채널명</strong>
+                        <br>
+                        채널소개
+                    </div>
+                </div>
+            </article>
+            <div class="video_box">
+                <iframe width="600" height="400" src="https://www.youtube.com/embed/3zPnom6vpZo" title="YouTube video player" frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen
+                class="video"></iframe>
+            </div>
+    </div>
+
+    <!--댓글창-->
+    <section class="section">
+        <article class="media">
+            <figure class="media-left" style="align-self: center">
+          <a class="image is-32x32" href="/user/{{ user_info.username }}">
+              <img src="../static/profile_pics/profile_placeholder.png">
+          </a>
+            </figure>
+            <div class="media-content">
+                <div class="field">
+                    <p class="control">
+                        <input id="input-post" class="input is-rounded" placeholder="채널에 대한 의견을 남겨주세요!"
+                               onclick='$("#modal-post").addClass("is-active")'>
+                    </p>
+                </div>
+            </div>
+        </article>
+        <div class="modal" id="modal-post">
+            <div class="modal-background" onclick='$("#modal-post").removeClass("is-active")'></div>
+            <div class="modal-content">
+                <div class="box">
+                    <article class="media">
+                        <div class="media-content">
+                            <div class="field">
+                                <p class="control">
+                                    <textarea id="textarea-post" class="textarea"
+                                              placeholder="채널에 대한 의견을 남겨주세요!"></textarea>
+                                </p>
+                            </div>
+                            <nav class="level is-mobile">
+                                <div class="level-left">
+
+                                </div>
+                                <div class="level-right">
+                                    <div class="level-item">
+                                        <a class="button is-sparta" onclick="post()" style="font-family: 'Jua', sans-serif;">포스팅하기</a>
+                                    </div>
+                                    <div class="level-item">
+                                        <a class="button is-sparta is-outlined"
+                                           onclick='$("#modal-post").removeClass("is-active")' style="font-family: 'Jua', sans-serif;">취소</a>
+                                    </div>
+                                </div>
+                            </nav>
+                        </div>
+                    </article>
+                </div>
+            </div>
+            <button class="modal-close is-large" aria-label="close"
+                    onclick='$("#modal-post").removeClass("is-active")'></button>
+        </div>
+
+    </section>
+
+    <section class="section">
+        <div id="post-box" class="container">
+            <div class="box">
+                <article class="media">
+                    <div class="media-left">
+                        <a class="image is-64x64" href="#">
+                            <img src="../static/profile_pics/profile_placeholder.png" alt="Image">
+                        </a>
+                    </div>
+                    <div class="media-content">
+                        <div class="content">
+                            <p>
+                                <strong>홍길동</strong> <small>@username</small> <small>10분 전</small>
+                                <br>
+                                글을 적는 칸
+                            </p>
+                        </div>
+                        <nav class="level is-mobile">
+                            <div class="level-left">
+                                <a class="level-item is-sparta" aria-label="heart"
+                                   onclick="toggle_like('', 'heart')">
+                                    <span class="icon is-small"><i class="fa fa-heart"
+                                                                   aria-hidden="true"></i></span>&nbsp;<span
+                                        class="like-num">2.7k</span>
+                                </a>
+                            </div>
+
+                        </nav>
+                    </div>
+                </article>
+            </div>
+
+        </div>
+    </section>
+
 </body>
 </html>

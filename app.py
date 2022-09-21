@@ -53,5 +53,29 @@ def youtube_get():
 def comment():
     return render_template('comment.html')
 
+# 진자2로 db에서 프로필 값 보내주기인데 확실하지 않아요..안되면 프로필 빼고 가는걸로..
+# @app.route('/comment')
+# def comment():
+#     profile = list(db.worthseeing.find({}, {"_id": False}))
+#     return render_template('index.html', profile=profile)
+
+# 코멘트 db 저장
+@app.route("/comment", methods=["POST"])
+def comment_post():
+    comment_receive = request.form['comment_give']
+
+    doc = {
+        'comment': comment_receive
+    }
+    db.worthseeing.insert_one(doc)
+
+    return jsonify({'msg': '등록 완료'})
+
+# 코멘트 html 보여주기
+@app.route("/comment", methods=["GET"])
+def comment_get():
+    all_comments = list(db.worthseeing.find({}, {'_id': False}))
+    return jsonify({'comments': all_comments})
+
 if __name__ == '__main__':
     app.run('0.0.0.0', port=5000, debug=True)

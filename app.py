@@ -21,9 +21,10 @@ def signup():
     return render_template('signup.html')
 
 @app.route("/list", methods=["POST"])
-def game_post():
+def channel_post():
     url_receive = request.form['url_give']
     comment_receive = request.form['comment_give']
+    video_receive = request.form['video_give']
 
     headers = {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)AppleWebKit/537.36 (KHTML, like Gecko) Chrome/73.0.3683.86 Safari/537.36'}
@@ -36,7 +37,8 @@ def game_post():
     doc = {
         'title':title,
         'image':image,
-        'comment':comment_receive
+        'comment':comment_receive,
+        'video': video_receive
     }
     db.list.insert_one(doc)
 

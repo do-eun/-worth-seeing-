@@ -20,23 +20,19 @@
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <!--CSS 링크-->
     <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-    
+
     <!-- 구글폰트 CSS -->
     <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
-    <!-- font-family: 'Jua', sans-serif;
-    font-family: 'Nanum Gothic', sans-serif; -->
-
-    <!-- <link href="{{ url_for('static', filename='mystyle.css') }}" rel="stylesheet"> -->
 
     <!-- JS -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
-    
-    <!-- <script src="{{ url_for('static', filename='myjs.js') }}"></script> -->
 
     <style>
         * {
             font-family: 'Nanum Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
         }
 
         /*채널추천 패널 박스*/
@@ -56,6 +52,11 @@
             font-size: 80px;
         }
 
+        /*메뉴 네비게이션*/
+        .navbar-item{
+         cursor :pointer;
+        }
+
         /*채널추가 박스*/
 
         #url {
@@ -64,6 +65,11 @@
         }
 
         #comment {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #video {
             margin-top: 10px;
             margin-bottom: 10px;
         }
@@ -80,11 +86,10 @@
 
         .mypost > label {
             font-weight: bolder;
-        } 
+        }
 
         .button_box {
             margin-top: 20px;
-
             display: flex;
             flex-direction:row;
             justify-content: center;
@@ -95,9 +100,13 @@
             margin-left: 10px;
             font-family: 'Jua', sans-serif;
         }
-        
+
+        #comment_cnt{
+            float: right;
+        }
+
         /*채널카드*/
-        
+
         #image_box {
             margin-bottom: 10px;
         }
@@ -114,56 +123,10 @@
 
         .flex-container.wrap{flex-wrap: wrap;}
 
-        /* transition 하기 */
-
-        /* #comment_cnt {
-            float: right;
-        }
-
-        #topbox-btn {
-            clear: both;
-        }
-
-        textarea {
-            resize: none;
-        }
-
-        #topbox-btn {
-            margin-top: 10px;
-            margin-bottom: -10px;
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .btn-submit {
-            background-color: #66d6a8;
-            border: none;
-        }
-
-        .card-wrap {
-            text-decoration: none;
-        }
-
-        .card {
-            border: solid 4px #ed8774;
-            max-width: 80vw;
-
-            margin: 0 auto;
-        }
-
-        .card-title {
-            color: black;
-        }
-
-        .card-text {
-            text-overflow: ellipsis;
-        } */
     </style>
-        
+
     <script>
-        $(document).ready(function () {
+         $(document).ready(function () {
         listing();
         });
 
@@ -177,7 +140,6 @@
             for (let i = 0; i < rows.length; i++) {
                 let comment = rows[i]["comment"];
                 let title = rows[i]["title"];
-                let desc = rows[i]["desc"];
                 let image = rows[i]["image"];
 
                 let temp_html = `<div class="tile is-parent tile is-3" id="card_box">
@@ -196,19 +158,36 @@
         });
         }
 
-        // function upload(){
-        //     let url_input = $("url").val()
-        //     console.log(url_input)
-        // }
-
         function posting() {
         let url = $("#url").val();
         let comment = $("#comment").val();
+        let video = $("#video").val();
+
+        /사이트 주소 미입력시 경고/
+        if($.trim($("#url").val())==''){
+            alert("사이트를 입력해주세요!");
+            return false;
+          }
+
+        /유튜브 주소가 아닐시 경고/
+        let url_check = $("#url").val();
+        if (url_check.includes('https://www.youtube.com/c')) {
+            console.log(url_check)
+            } else {
+            alert('유튜브 채널의 주소를 입력해주세요.')
+            return false;
+            }
+
+        /소개글 안적었을때 경고/
+        if($.trim($("#comment").val())==''){
+            alert("채널 소개를 입력해주세요.");
+            return false;
+        }
 
         $.ajax({
             type: "POST",
             url: "/list",
-            data: {url_give: url, comment_give: comment },
+            data: {url_give: url, comment_give: comment, video_give: video},
             success: function (response) {
             alert(response["msg"]);
             window.location.reload();
@@ -216,9 +195,23 @@
         });
         }
 
+
+
+        /설명 길이 30자로 제한/
+        $(document).ready(function() {
+              $('#comment').on('keyup', function() {
+                  $('#comment_cnt').html("("+$(this).val().length+" / 30)");
+
+                  if($(this).val().length > 30) {
+                      $(this).val($(this).val().substring(0, 30));
+                      $('#commet_cnt').html("(30 / 30)");
+                  }
+              });
+          });
+
         function open_box() {
-                    $('#post-box').show()
-                }
+        $('#post-box').show()
+        }
 
         function close_box() {
         $("#post-box").hide();
@@ -229,9 +222,9 @@
   <body>
     <!--네비게이션바-->
         <nav class="navbar-menu is-active">
-            <div class="navbar-brand"> 
+            <div class="navbar-brand">
                 <a class="navbar-item">
-                <img src="../static/타이틀 로고.png" width="100" alt="볼만해">
+                <img src="../static/타이틀%20로고.png" width="100" alt="볼만해">
                 </a>
             </div>
             <div class="navbar-start">
@@ -242,7 +235,7 @@
                     나의 정보
                 </a>
             </div>
-          
+
             <div class="navbar-end">
               <div class="navbar-item">
                 <div class="buttons">
@@ -250,6 +243,7 @@
                     <strong style="font-family: 'Jua', sans-serif;">로그아웃 하기</strong>
                   </a>
                 </div>
+              </div>
             </div>
         </nav>
 
@@ -264,21 +258,25 @@
         <div class="mypost" id="post-box">
             <label>채널 URL</label>
             <input class="input is-primary" type="text" placeholder="추천하려는 채널 주소를 넣어주세요" id="url">
-            
-            <label>채널 소개</label>
-            <input class="input is-primary" type="text" placeholder="간단한 채널 소개" id="comment">
 
-            <div class="button_box" onclick="close_box()">
-                <button class="button is-primary">등록하기</button>
-                <button class="button">닫기</button>
+            <label>추천하는 영상</label>
+            <input class="input is-primary" type="text" placeholder="추천하려는 채널 주소를 넣어주세요" id="video">
+
+            <label>채널 소개</label>
+            <input class="input is-primary" type="text" placeholder="간단한 채널 소개" id="comment" maxlength="30">
+            <div id="comment_cnt">(0 / 30)</div>
+
+            <div class="button_box">
+                <button class="button is-primary" onclick="posting()">등록하기</button>
+                <button class="button" onclick="close_box()">닫기</button>
             </div>
         </div>
     </div>
 
     <!-- 추천 채널 카드 -->
     <div class="flex-container wrap" id="cards-box">
-       
+
     </div>
-      
+
   </body>
 </html>

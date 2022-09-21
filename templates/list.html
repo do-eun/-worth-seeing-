@@ -163,24 +163,38 @@
         let comment = $("#comment").val();
         let video = $("#video").val();
 
-        /사이트 주소 미입력시 경고/
+        /URL 주소 미입력시 경고/
         if($.trim($("#url").val())==''){
-            alert("사이트를 입력해주세요!");
+            alert("유튜브 채널의 주소를 입력해주세요.");
             return false;
           }
 
-        /유튜브 주소가 아닐시 경고/
+         /유튜브 주소가 아닐시 경고/
         let url_check = $("#url").val();
         if (url_check.includes('https://www.youtube.com/c')) {
             console.log(url_check)
             } else {
-            alert('유튜브 채널의 주소를 입력해주세요.')
+            alert('정확한 유튜브 채널의 주소를 입력해주세요.')
+            return false;
+            }
+
+         /영상 주소 미입력시 경고/
+        if($.trim($("#video").val())==''){
+            alert("영상의 주소를 입력해주세요.");
+            return false;
+          }
+
+        let youtube_check = $("#video").val();
+        if (youtube_check.includes('https://www.youtube.com/watch')) {
+            console.log(youtube_check)
+            } else {
+            alert('영상의 주소를 정확히 입력해주세요.')
             return false;
             }
 
         /소개글 안적었을때 경고/
         if($.trim($("#comment").val())==''){
-            alert("채널 소개를 입력해주세요.");
+            alert("간단한 채널 소개를 입력해주세요!");
             return false;
         }
 
@@ -194,7 +208,6 @@
             },
         });
         }
-
 
 
         /설명 길이 30자로 제한/
@@ -260,7 +273,7 @@
             <input class="input is-primary" type="text" placeholder="추천하려는 채널 주소를 넣어주세요" id="url">
 
             <label>추천하는 영상</label>
-            <input class="input is-primary" type="text" placeholder="추천하려는 채널 주소를 넣어주세요" id="video">
+            <input class="input is-primary" type="text" placeholder="추천하려는 영상 주소를 넣어주세요" id="video">
 
             <label>채널 소개</label>
             <input class="input is-primary" type="text" placeholder="간단한 채널 소개" id="comment" maxlength="30">

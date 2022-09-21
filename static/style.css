@@ -1,0 +1,82 @@
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+* {
+            font-family: 'Nanum Gothic', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /*채널추천 패널 박스*/
+
+        .hero-body {
+            display: flex;
+            flex-direction:column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .hero-body > button {
+            margin-top: 10px;
+        }
+
+        .title {
+            font-size: 80px;
+        }
+
+        /*채널추가 박스*/
+
+        #url {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        #comment {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
+        .mypost {
+            width: 95%;
+            max-width: 600px;
+            margin: 10px auto 0px auto;
+            padding: 20px;
+            box-shadow: 0px 0px 3px 0px #34a375;
+            display: none;
+            border: 5px solid #41cc93;
+        }
+
+        .mypost > label {
+            font-weight: bolder;
+        }
+
+        .button_box {
+            margin-top: 20px;
+
+            display: flex;
+            flex-direction:row;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .button_box > button {
+            margin-left: 10px;
+            font-family: 'Jua', sans-serif;
+        }
+
+        /*채널카드*/
+
+        #image_box {
+            margin-bottom: 10px;
+        }
+
+        .flex-container {
+            display: flex;
+
+            margin: auto;
+            width: 90%;
+            max-width: 1200px;
+            /* border:5px solid #ED8774;
+            border-radius: 10px; */
+        }
+
+        .flex-container.wrap{flex-wrap: wrap;}

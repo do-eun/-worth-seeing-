@@ -2,9 +2,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
+
+    <script src="https://kit.fontawesome.com/ca4299af83.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" type="text/css" href="/static/signup.css">
+
+    <title>회원가입 페이지</title>
+    <script>
+
+    </script>
 </head>
+
 <body>
-    <h1>회원가입 페이지 입니다.</h1>
+    <div class="container">
+        <div class="wrap">
+            <h1>회원가입</h1>
+            <div class="form">
+                <span>아이디</span><input id="input_id" class="form_input" type="text" maxlength="16">
+            </div>
+            <div class="form">
+                <span>비밀번호</span><input id="input_pw" class="form_input" type="password" maxlength="16">
+            </div>
+            <div class="form">
+                <span>비밀번호 확인</span><input id="input_pw_check" class="form_input" type="password" maxlength="16">
+            </div>
+            <div class="form">
+                <span>프로필 사진</span><input id="input_img" class="img_input" type="file" accept="image/png, image/jpeg">
+            </div>
+            <div class="form">
+                <span>닉네임</span><input id="input_nick" class="form_input" type="text" maxlength="16">
+            </div>
+        </div>
+        <div class="foot_btn">
+            <button class="signup_btn">가입하기 ✅</button>
+            <button class="cancel_btn">취소 ❌</button>
+        </div>
+    </div>
 </body>
 </html>

@@ -69,6 +69,11 @@
             margin-bottom: 10px;
         }
 
+        #video {
+            margin-top: 10px;
+            margin-bottom: 10px;
+        }
+
         .mypost {
             width: 95%;
             max-width: 600px;
@@ -121,7 +126,7 @@
     </style>
 
     <script>
-        $(document).ready(function () {
+         $(document).ready(function () {
         listing();
         });
 
@@ -135,7 +140,6 @@
             for (let i = 0; i < rows.length; i++) {
                 let comment = rows[i]["comment"];
                 let title = rows[i]["title"];
-                let desc = rows[i]["desc"];
                 let image = rows[i]["image"];
 
                 let temp_html = `<div class="tile is-parent tile is-3" id="card_box">
@@ -154,14 +158,10 @@
         });
         }
 
-        function upload(){
-            let url_input = $("url").val()
-            console.log(url_input)
-        }
-
         function posting() {
         let url = $("#url").val();
         let comment = $("#comment").val();
+        let video = $("#video").val();
 
         /사이트 주소 미입력시 경고/
         if($.trim($("#url").val())==''){
@@ -169,21 +169,25 @@
             return false;
           }
 
-        if(($("#url").val()) ==! 'https'){
-            alert("주소를 정확히 입력해주세요");
+        /유튜브 주소가 아닐시 경고/
+        let url_check = $("#url").val();
+        if (url_check.includes('https://www.youtube.com/c')) {
+            console.log(url_check)
+            } else {
+            alert('유튜브 채널의 주소를 입력해주세요.')
             return false;
             }
 
         /소개글 안적었을때 경고/
         if($.trim($("#comment").val())==''){
-            alert("추천하는 이유도 알려줘잉.");
+            alert("채널 소개를 입력해주세요.");
             return false;
         }
 
         $.ajax({
             type: "POST",
             url: "/list",
-            data: {url_give: url, comment_give: comment },
+            data: {url_give: url, comment_give: comment, video_give: video},
             success: function (response) {
             alert(response["msg"]);
             window.location.reload();
@@ -206,8 +210,8 @@
           });
 
         function open_box() {
-                    $('#post-box').show()
-                }
+        $('#post-box').show()
+        }
 
         function close_box() {
         $("#post-box").hide();
@@ -254,6 +258,9 @@
         <div class="mypost" id="post-box">
             <label>채널 URL</label>
             <input class="input is-primary" type="text" placeholder="추천하려는 채널 주소를 넣어주세요" id="url">
+
+            <label>추천하는 영상</label>
+            <input class="input is-primary" type="text" placeholder="추천하려는 채널 주소를 넣어주세요" id="video">
 
             <label>채널 소개</label>
             <input class="input is-primary" type="text" placeholder="간단한 채널 소개" id="comment" maxlength="30">

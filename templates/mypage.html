@@ -95,21 +95,60 @@
             font-family: 'Jua', sans-serif;
         }
     </style>
+    <script>
+        $(document).ready(function () {
+            get_posts("{{ user_info.username }}")
+        })
+
+        //로그아웃 기능
+        function sign_out() {
+            $.removeCookie('mytoken', {path: '/'});
+            alert('로그아웃!')
+            window.location.href = "/login"
+        }
+
+        //프로필 수정
+        function update_profile() {
+                let name = $('#input-name').val()
+                let file = $('#input-pic')[0].files[0]
+                let about = $("#textarea-about").val()
+                let form_data = new FormData()
+                form_data.append("file_give", file)
+                form_data.append("name_give", name)
+                form_data.append("about_give", about)
+                console.log(name, file, about, form_data)
+
+                $.ajax({
+                    type: "POST",
+                    url: "/update_profile",
+                    data: form_data,
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+                    success: function (response) {
+                        if (response["result"] == "success") {
+                            alert(response["msg"])
+                            window.location.reload()
+
+                        }
+                    }
+                });
+            }
+    </script>
 
 </head>
 <body>
-    <!--네비게이션바-->
     <nav class="navbar-menu is-active">
-        <div class="navbar-brand"> 
+        <div class="navbar-brand">
             <a class="navbar-item">
             <img src="../static/타이틀 로고.png" width="100" alt="볼만해">
             </a>
         </div>
         <div class="navbar-start">
-            <a class="navbar-item" style="font-family: 'Jua', sans-serif;">
+            <a class="navbar-item" style="font-family: 'Jua', sans-serif;" href="/">
                 채널 추천 보러가기
             </a>
-            <a class="navbar-item" style="font-family: 'Jua', sans-serif;">
+            <a class="navbar-item" style="font-family: 'Jua', sans-serif;" href="/mypage/{{ user_info.username }}">
                 나의 정보
             </a>
         </div>
@@ -118,7 +157,7 @@
           <div class="navbar-item">
             <div class="buttons">
               <a class="button is-primary">
-                <strong style="font-family: 'Jua', sans-serif;">로그아웃 하기</strong>
+                <strong style="font-family: 'Jua', sans-serif;" onclick="sign_out()">로그아웃 하기</strong>
               </a>
             </div>
         </div>
@@ -132,51 +171,50 @@
 
     <!--마이 페이지 박스-->
     <article class="media">
-            <figure class="media-left" style="align-self: center">
-                <a class="image is-96x96" href="#">
-                    <img src="../static/profile_pics/profile_placeholder.png">
-                </a>
-            </figure>
-            <div class="media-content">
-                <div class="content">
-                    <strong>아이디</strong>
-                    <br>
-                    소개글
-                </div>
+        <figure class="media-left" style="align-self: center">
+            <a class="image is-96x96" href="#">
+                <img src="{{ url_for('static', filename=user_info.profile_pic_real) }}">
+            </a>
+        </figure>
+        <div class="media-content">
+            <div class="content">
+                <strong>{{ user_info.profile_name }}</strong><small>@{{ user_info.username }}</small>
+                <br>
+                {{ user_info.profile_info }}
             </div>
-        </article>
+        </div>
+    </article>
     <div class="mypage_box">
-        
-        <div>
-            <label class="label" id="name_box">이름</label>
-            <div class="control">
-              <input class="input" type="text" placeholder="닉네임">
+        <label class="label" id="name_box" for="input-name">닉네임</label>
+        <div class="control">
+            <input class="input" id="input-name" type="text" placeholder="닉네임" value="{{ user_info.profile_name }}">
+        </div>
+
+        <label class="label" id="intro_box" for=textarea-about">소개글</label>
+        <textarea class="textarea" id="textarea-about"
+            placeholder="소개글을 작성해주세요.">{{ user_info.profile_info }}</textarea>
+
+        <label class="label" id="intro_box">프로필 사진 변경</label>
+        <div class="control is-expanded" id="profile_box">
+            <div class="file has-name">
+                <label class="file-label" style="width:100%">
+                    <input id="input-pic" class="file-input" type="file"
+                            name="resume">
+                    <span class="file-cta"><span class="file-icon">
+                        <i class="fa fa-upload"></i></span>
+                        <span class="file-label">파일 선택</span>
+                    </span>
+                    <span id="file-name" class="file-name"
+                        style="width:100%;max-width:100%">{{ user_info.profile_pic }}</span>
+                </label>
             </div>
 
-            <label class="label" id="intro_box">소개글</label>
-            <textarea class="textarea" placeholder="e.g. Hello world"></textarea>
-
-            <label class="label" id="intro_box">프로필 사진 변경</label>
-            <div class="control is-expanded" id="profile_box">
-                <div class="file has-name">
-                    <label class="file-label" style="width:100%">
-                        <input id="input-pic" class="file-input" type="file"
-                               name="resume">
-                        <span class="file-cta"><span class="file-icon"><i
-                                class="fa fa-upload"></i></span>
-                    <span class="file-label">파일 선택</span>
-                </span>
-                        <span id="file-name" class="file-name"
-                              style="width:100%;max-width:100%">찾아보기 -- </span>
-                    </label>
-                </div>
-
-            </div>
-            <div class="button_box">
-                <button class="button is-info">수정 완료</button>
-                <button class="button">돌아가기</button>
-            </div>
-        </div> 
+        </div>
+        <div class="button_box">
+            <button class="button is-info" onclick="update_profile()">수정 완료</button>
+            <button class="button">돌아가기</button>
+        </div>
+    </div>
 
 </body>
 </html>

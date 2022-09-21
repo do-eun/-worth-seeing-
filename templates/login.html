@@ -2,34 +2,81 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
     <script src="https://kit.fontawesome.com/ca4299af83.js" crossorigin="anonymous"></script>
-
-    <link rel="stylesheet" type="text/css" href="/static/login.css">
+    <link href="https://fonts.googleapis.com/css2?family=Jua&family=Nanum+Gothic&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="../static/login.css">
 
     <title>로그인 페이지</title>
 
     <script>
+         // {% if msg %}
+            //     alert("{{ msg }}")
+            // {% endif %}
         // 로그인 입력값을 불러와서 서버에 ajax 요청
-        function login() {
-            $('#input_id').val()
-            $('#input_pw').val()
-        }
+        // if user_id가 빈값이면 id ='help-id-login'의 text를 수정함
+        // 그리고 id='input_id' 요소를 선택(클릭)하고 return 시킴
+        // else id ='help-id-login'를 비워둠
+        function sign_in() {
+            let user_id = $('#input_id').val()
+            let user_pw = $('#input_pw').val()
+
+            if (user_id == "") {
+                $('#help-id-login').text("아이디를 입력해주세요.")
+                $('#input_id').focus()
+                return
+            } else {
+                $('#help-id-login').text("")
+            }
+            // 
+            if (user_pw == "") {
+                $('#help-password-login').text("비밀번호를 입력해주세요.")
+                $('#input_pw').focus()
+                return
+            } else {
+                $('#help-password-login').text("")
+            }
+
+            // login api에 post 요청 userid,pw 를 username,password_give로 보내줌
+            // if 응답의 결과가 성공이면 cookie (KEY, VAULE, {경로})를 생성하고
+            // href가 아닌 replace를 이용하여 이전 페이지 이동은 불가능 해야함
+            // else 응답 메시지를 alret 해줌
+            console.log(user_id,user_pw)
+                $.ajax({
+                    type: "POST",
+                    url: "/sign_in",
+                    data: {
+                        username_give: user_id,
+                        password_give: user_pw
+                    },
+                    success: function (response) {
+                        console.log(response)
+                        if (response['result'] == 'success') {
+                            $.cookie('mytoken', response['token'], {path: '/'});
+                            window.location.replace("/main")
+                        } else {
+                            alert(response['msg'])
+                        }
+                    }
+                });
+            }
     </script>
 </head>
 
 <body>
     <div class="container">
-        <div class="logo_box">
-            <img class="login_logo" src="/static/1200x360%20웹%20로고.png">
+        <div class="logo_box">  <!-- 상단 로고, 설명-->
+            <img class="login_logo" src="../static/1200x360%20웹%20로고.png">
             <h1>유튜브에서 재미있게 봤던 영상이 있다면 그 채널을 다른 사람과 공유하며 즐길수 있는 웹 페이지 입니다.</h1>
         </div>
         <div class="login_box">
             <div class="login_function">
                 <div class="login_input">
-                    <div class="control has-icons-left has-icons-right">
-                        <input id="input_id" class="input is-large" type="email" placeholder="아이디">
+                    <div class="control has-icons-left has-icons-right">    <!-- 아이디 입력 -->
+                        <input id="input_id" class="input is-large" type="text" placeholder="아이디">
                         <span class="icon is-medium is-left">
                             <i class="fa-sharp fa-solid fa-circle-user"></i>
                         </span>
@@ -37,8 +84,9 @@
                             <i class="fas fa-check"></i>
                         </span>
                     </div>
-                    <div class="control has-icons-left has-icons-right">
-                        <input id="input_pw" class="input is-large" type="email" placeholder="비밀번호">
+                    <p id="help-id-login" class="help is-danger"></p>   <!-- 아이디가 없으면 경고 텍스트 발생 -->
+                    <div class="control has-icons-left has-icons-right">    <!-- 비밀번호 입력 -->
+                        <input id="input_pw" class="input is-large" type="password" placeholder="비밀번호">
                         <span class="icon is-medium is-left">
                             <i class="fa-sharp fa-solid fa-lock"></i>
                         </span>
@@ -46,12 +94,13 @@
                             <i class="fas fa-check"></i>
                         </span>
                     </div>
+                    <p id="help-password-login" class="help is-danger"></p> <!-- 비밀번호가 없으면 경고 텍스트 발생 -->
                 </div>
-                <button class="login_btn" onclick="login()" class="button is-outlined">🚀 로그인하기</button>
+                <button class="login_btn" onclick="sign_in()" class="button is-outlined">🚀 로그인하기</button>   <!-- 로그인 버튼 -->
             </div>
-            <div class="login_option">
-                <button class= "signup_btn">회원가입</button>
-                <button class= "search_btn">아이디/비밀번호 찾기</button>
+            <div class="login_option">  <!-- 회원가입, 아이디, 비밀번호 찾기 버튼 -->
+                <button class= "signup_btn" onclick=location.href='/sign_up' >회원가입</button>
+                <button class= "search_btn">아이디/비밀번호 찾기</button>   
             </div>
         </div>
     </div>

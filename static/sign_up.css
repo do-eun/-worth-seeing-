@@ -1,19 +1,5 @@
-@font-face {
-    font-family: 'MICEGothic Bold';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2206-01@1.0/MICEGothic Bold.woff2') format('woff2');
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'SUIT-Medium';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_suit@1.0/SUIT-Medium.woff2') format('woff2');
-    font-weight: normal;
-    font-style: normal;
-}
-
 *{
-    font-family: 'SUIT-Medium';
+    font-family: 'Nanum Gothic', sans-serif;
 }
 
 html, body {
@@ -39,11 +25,10 @@ html, body {
 h1 {
     margin-bottom: 30px;
 
-    font-family: 'MICEGothic Bold';
     font-size: 36px;
     font-weight: bold;
 
-    margin-top: 15px;
+    margin-top: 50px;
     text-align: center;
 }
 
@@ -52,27 +37,32 @@ h1 {
     flex-direction: row;
     align-items: center;
     justify-content: start;
-    margin-bottom: 50px;
+    margin-top: 50px;
 }
 
 .form_input {
-    height: 42px;
+    height: 40px;
     width: 350px;
-    padding-left: 3px;
+    padding-left: 5px;
+    font-size: 16px;
 }
 
-.img_input {
-    height: 32px;
-    width: 200px;
-    padding-left: 3px;
-}
+/*.img_input {*/
+/*    height: 32px;*/
+/*    width: 200px;*/
+/*    padding-left: 3px;*/
+/*}*/
 
 span {
-    font-size: 28px;
+    font-size: 26px;
     margin-right: 10px;
 }
 
+
+
 .foot_btn {
+    margin-top: 50px;
+
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -91,8 +81,12 @@ span {
     height: 75px;
 }
 
+#btn-check-dup {
+    margin-left: 15px;
+}
+
 button {
-    font-family: 'SUIT-Medium';
+    font-family: 'Jua', sans-serif;
     font-size: 26px;
 
     border: 3px solid #006BA3;
@@ -105,4 +99,16 @@ button {
 button:hover {
     border: 5px solid #006BA3;
     box-shadow: 2px 2px;
+}
+
+.button.is-sparta {
+    background-color: #e8344e;
+    border-color: transparent;
+    color: #fff !important;
+}
+
+.button.is-sparta.is-outlined {
+    background-color: transparent;
+    border-color: #e8344e;
+    color: #e8344e !important;
 }

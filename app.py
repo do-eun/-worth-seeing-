@@ -1,10 +1,14 @@
 #flask, pymongo, dnspython,requests, bs4 일단 이렇게만 했습니다.
 from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
+SECRET_KEY = 'SPARTA'
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config['UPLOAD_FOLDER'] = "../static/profile_pics"
 
-import requests
+import requests, hashlib, jwt
 from bs4 import BeautifulSoup
 
+from datetime import datetime, timedelta
 from pymongo import MongoClient
 import certifi
 client = MongoClient('mongodb+srv://test:sparta@cluster0.znplsth.mongodb.net/?retryWrites=true&w=majority', tlsCAFile=certifi.where())

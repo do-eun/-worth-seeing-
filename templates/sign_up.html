@@ -1,7 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
+    <!-- Webpage Title -->
+    <title> 볼만해 회원가입 | worth_seeing</title>
+
+    <meta property="og:title" content="볼만해 - 유튜브 채널 추천"/>
+    <meta property="og:description" content="유튜브에서 재미있게 봤던 영상이 있다면 그 채널을 다른 사람과 공유하며 같이 즐길 수 있는 웹 페이지 입니다."/>
+    <meta property="og:image" content="{{ url_for('static', filename='og.png') }}"/>
+
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-cookie/1.4.1/jquery.cookie.js"></script>
@@ -11,7 +20,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Do+Hyeon&display=swap" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="../static/sign_up.css">
 
-    <title>회원가입 페이지</title>
 
     <script>
         // 회원가입 기능
